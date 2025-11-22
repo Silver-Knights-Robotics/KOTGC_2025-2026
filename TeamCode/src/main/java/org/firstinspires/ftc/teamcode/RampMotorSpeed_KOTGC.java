@@ -86,7 +86,7 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
                 }
             }
             else {
-                // Keep stepping down until we hit the min value.
+                // Step down until max power is reached and hold steady
                 power -= INCREMENT ;
                 if (power <= MAX_FWD ) {
                     power = MAX_FWD;
