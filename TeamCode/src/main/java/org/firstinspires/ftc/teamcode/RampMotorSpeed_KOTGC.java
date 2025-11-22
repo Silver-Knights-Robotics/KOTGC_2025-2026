@@ -88,8 +88,8 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
             else {
                 // Keep stepping down until we hit the min value.
                 power -= INCREMENT ;
-                if (power <= MAX_REV ) {
-                    power = MAX_REV;
+                if (power <= MAX_FWD ) {
+                    power = MAX_FWD;
                     rampUp = !rampUp;  // Switch ramp direction
                 }
             }
