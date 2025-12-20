@@ -79,7 +79,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        launcher.setDirection(DcMotorSimple.Direction.FORWARD);
+        launcher.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -102,12 +102,14 @@ public class BasicOpMode_Linear extends LinearOpMode {
             double turn  =  gamepad1.right_stick_x;
             leftPower    = Range.clip(drive - turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive + turn, -1.0, 1.0) ;
-            launchpower = Range.clip(drive - turn, -1.0, 1.0);
+            launchpower = Range.clip(drive + turn, -1.0, 1.0);
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
+
+            launchpower = gamepad1.x ? 1.0 : 0.0;
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
