@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -62,6 +63,8 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
     private DcMotor launcher = null;
 
+    private Servo servo1 = null;
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -73,6 +76,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         launcher =  hardwareMap.get(DcMotor.class, "launcher");
+                servo1 = hardwareMap.get(Servo.class, "ramp_servo");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -104,6 +108,13 @@ public class BasicOpMode_Linear extends LinearOpMode {
             rightPower   = Range.clip(drive + turn, -1.0, 1.0) ;
             launchpower = Range.clip(drive + turn, -1.0, 1.0);
 
+            if (gamepad1.left_bumper) {
+                servo1.setPosition((servo1.getPosition() + 0.01));
+            }
+            if (gamepad1.right_bumper) {
+                servo1.setPosition((servo1.getPosition() - 0.01));
+            }
+
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
@@ -115,6 +126,8 @@ public class BasicOpMode_Linear extends LinearOpMode {
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
             launcher.setPower(launchpower);
+                    telemetry.addData("Servo Position", servo1.getPosition());
+                    telemetry.addData("Launcher Power", launcher.getPower());
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
