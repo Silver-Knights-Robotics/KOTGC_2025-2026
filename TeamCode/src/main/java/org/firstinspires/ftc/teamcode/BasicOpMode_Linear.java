@@ -113,7 +113,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             double turn  =  gamepad1.right_stick_x;
             leftPower    = Range.clip(drive - turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive + turn, -1.0, 1.0) ;
-            launchpower = Range.clip(drive + turn, -1.0, 1.0);
+            launchpower = Range.clip(drive + turn, -1.0, 1.5);
             launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
 
             if (gamepad1.left_bumper) {
