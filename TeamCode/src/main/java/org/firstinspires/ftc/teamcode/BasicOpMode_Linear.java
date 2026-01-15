@@ -113,8 +113,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             leftPower    = Range.clip(drive - turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive + turn, -1.0, 1.0) ;
 
-            launchpower = Range.clip(drive + turn, -1.0, 1.5);
-            launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
+     
 
 
 //            launchpower = Range.clip(drive + turn, -1.0, 1.0);
