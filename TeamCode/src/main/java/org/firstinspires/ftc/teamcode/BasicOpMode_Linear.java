@@ -101,7 +101,6 @@ public class BasicOpMode_Linear extends LinearOpMode {
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
             double rightPower;
-            double launchpower;
             double launchpower2;
 
             // Choose to drive using either Tank Mode, or POV Mode
@@ -113,9 +112,9 @@ public class BasicOpMode_Linear extends LinearOpMode {
             double turn  =  gamepad1.right_stick_x;
             leftPower    = Range.clip(drive - turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive + turn, -1.0, 1.0) ;
-            launchpower = Range.clip(drive + turn, -1.0, 1.0);
-            launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
-
+//            launchpower = Range.clip(drive + turn, -1.0, 1.0);
+//            launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
+              launchpower2 = 1;
             if (gamepad1.left_bumper) {
                 servo1.setPosition((servo1.getPosition() + 0.01));
             }
@@ -134,14 +133,16 @@ public class BasicOpMode_Linear extends LinearOpMode {
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
 
-           launcher.setPower(gamepad1.right_trigger);
+           launcher.setPower(gamepad1.right_trigger*1.5);
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
-            launcher.setPower(launchpower);
+
+            launcher2.setPower(launchpower2);
                     telemetry.addData("Servo Position", servo1.getPosition());
                     telemetry.addData("Launcher Power", launcher.getPower());
+                    telemetry.addData("Launcher 2 Power", launcher2.getPower());
                     telemetry.addData("Servo Position", servo2.getPosition());
 
 
