@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
+
 /*
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
@@ -62,8 +63,10 @@ public class BasicOpMode_Linear extends LinearOpMode {
     private DcMotor rightDrive = null;
 
     private DcMotor launcher = null;
+    private DcMotor launcher2 = null;
 
     private Servo servo1 = null;
+    private Servo servo2 = null;
 
     @Override
     public void runOpMode() {
@@ -75,8 +78,10 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        launcher =  hardwareMap.get(DcMotor.class, "launcher");
-                servo1 = hardwareMap.get(Servo.class, "ramp_servo");
+        launcher =  hardwareMap.get(DcMotor.class, "intake");
+        launcher2 = hardwareMap.get(DcMotor.class, "launcher");
+                servo1 = hardwareMap.get(Servo.class, "push_servo");
+                servo2 = hardwareMap.get(Servo.class, "ramp_servo");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -84,6 +89,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
         launcher.setDirection(DcMotorSimple.Direction.REVERSE);
+        launcher2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -96,6 +102,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             double leftPower;
             double rightPower;
             double launchpower;
+            double launchpower2;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -107,6 +114,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             leftPower    = Range.clip(drive - turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive + turn, -1.0, 1.0) ;
             launchpower = Range.clip(drive + turn, -1.0, 1.0);
+            launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
 
             if (gamepad1.left_bumper) {
                 servo1.setPosition((servo1.getPosition() + 0.01));
@@ -114,13 +122,19 @@ public class BasicOpMode_Linear extends LinearOpMode {
             if (gamepad1.right_bumper) {
                 servo1.setPosition((servo1.getPosition() - 0.01));
             }
+            if (gamepad1.right_bumper) {
+                servo2.setPosition((servo2.getPosition() + 0.01));
+            }
+            if (gamepad1.left_bumper) {
+                servo2.setPosition((servo2.getPosition() - 0.01));
+            }
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
 
-            launchpower = gamepad1.x ? 1.0 : 0.0;
+           launcher.setPower(gamepad1.right_trigger);
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
@@ -128,6 +142,8 @@ public class BasicOpMode_Linear extends LinearOpMode {
             launcher.setPower(launchpower);
                     telemetry.addData("Servo Position", servo1.getPosition());
                     telemetry.addData("Launcher Power", launcher.getPower());
+                    telemetry.addData("Servo Position", servo2.getPosition());
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
