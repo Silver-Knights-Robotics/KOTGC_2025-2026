@@ -127,10 +127,10 @@ public class BasicOpMode_Linear extends LinearOpMode {
                 servo1.setPosition((servo1.getPosition() - 0.01));
             }
             if (gamepad1.right_bumper) {
-                servo2.setPosition((servo2.getPosition() + 0.01));
+                servo2.setPosition((servo2.getPosition() - 0.01));
             }
             if (gamepad1.left_bumper) {
-                servo2.setPosition((servo2.getPosition() - 0.01));
+                servo2.setPosition((servo2.getPosition() + 0.01));
             }
 
             // Tank Mode uses one stick to control each wheel.
