@@ -77,12 +77,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        launcher =  hardwareMap.get(DcMotor.class, "intake");
+        launcher = hardwareMap.get(DcMotor.class, "intake");
         launcher2 = hardwareMap.get(DcMotor.class, "launcher");
-                servo1 = hardwareMap.get(Servo.class, "push_servo");
-                servo2 = hardwareMap.get(Servo.class, "ramp_servo");
+        servo1 = hardwareMap.get(Servo.class, "push_servo");
+        servo2 = hardwareMap.get(Servo.class, "ramp_servo");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -91,7 +91,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         launcher.setDirection(DcMotorSimple.Direction.REVERSE);
         launcher2.setDirection(DcMotor.Direction.FORWARD);
-       
+
 
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -111,16 +111,14 @@ public class BasicOpMode_Linear extends LinearOpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive - turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive + turn, -1.0, 1.0) ;
-
-     
+            double turn = gamepad1.right_stick_x;
+            leftPower = Range.clip(drive - turn, -1.0, 1.0);
+            rightPower = Range.clip(drive + turn, -1.0, 1.0);
 
 
 //            launchpower = Range.clip(drive + turn, -1.0, 1.0);
 //            launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
-              launchpower2 = 1;
+            launchpower2 = 1;
 
             if (gamepad1.dpad_up) {
                 servo1.setPosition((servo1.getPosition() + 0.01));
@@ -128,35 +126,44 @@ public class BasicOpMode_Linear extends LinearOpMode {
             if (gamepad1.dpad_down) {
                 servo1.setPosition((servo1.getPosition() - 0.01));
             }
+
             if (gamepad1.dpad_left) {
                 servo2.setPosition((servo2.getPosition() + 0.01));
             }
-            if (gamepad1.dpad_right ) {
+            if (gamepad1.dpad_right) {
                 servo2.setPosition((servo2.getPosition() - 0.01));
+
+                if (gamepad1.right_bumper) {
+                    servo2.setPosition((servo2.getPosition() - 0.01));
+                }
+                if (gamepad1.left_bumper) {
+                    servo2.setPosition((servo2.getPosition() + 0.01));
+
+                }
+
+                // Tank Mode uses one stick to control each wheel.
+                // - This requires no math, but it is hard to drive forward slowly and keep straight.
+                // leftPower  = -gamepad1.left_stick_y ;
+                // rightPower = -gamepad1.right_stick_y ;
+
+                launcher.setPower(gamepad1.right_trigger * -1);
+
+                // Send calculated power to wheels
+                leftDrive.setPower(leftPower);
+                rightDrive.setPower(rightPower);
+
+                launcher2.setPower(launchpower2);
+                telemetry.addData("Servo Position", servo1.getPosition());
+                telemetry.addData("Launcher Power", launcher.getPower());
+                telemetry.addData("Launcher 2 Power", launcher2.getPower());
+                telemetry.addData("Servo Position", servo2.getPosition());
+
+
+                // Show the elapsed game time and wheel power.
+                telemetry.addData("Status", "Run Time: " + runtime.toString());
+                telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+                telemetry.update();
             }
-
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
-
-           launcher.setPower(gamepad1.right_trigger*-1);
-
-            // Send calculated power to wheels
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
-
-            launcher2.setPower(launchpower2);
-                    telemetry.addData("Servo Position", servo1.getPosition());
-                    telemetry.addData("Launcher Power", launcher.getPower());
-                    telemetry.addData("Launcher 2 Power", launcher2.getPower());
-                    telemetry.addData("Servo Position", servo2.getPosition());
-
-
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-            telemetry.update();
         }
     }
 }
