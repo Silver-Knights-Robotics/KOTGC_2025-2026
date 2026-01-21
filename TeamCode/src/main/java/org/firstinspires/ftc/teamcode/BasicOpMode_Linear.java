@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -86,10 +87,11 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
         launcher.setDirection(DcMotorSimple.Direction.REVERSE);
-        launcher2.setDirection(DcMotorSimple.Direction.FORWARD);
+        launcher2.setDirection(DcMotor.Direction.FORWARD);
+       
 
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -120,16 +122,16 @@ public class BasicOpMode_Linear extends LinearOpMode {
 //            launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
               launchpower2 = 1;
 
-            if (gamepad1.left_bumper) {
+            if (gamepad1.dpad_up) {
                 servo1.setPosition((servo1.getPosition() + 0.01));
             }
-            if (gamepad1.right_bumper) {
+            if (gamepad1.dpad_down) {
                 servo1.setPosition((servo1.getPosition() - 0.01));
             }
-            if (gamepad1.right_bumper) {
+            if (gamepad1.dpad_left) {
                 servo2.setPosition((servo2.getPosition() + 0.01));
             }
-            if (gamepad1.left_bumper) {
+            if (gamepad1.dpad_right ) {
                 servo2.setPosition((servo2.getPosition() - 0.01));
             }
 
@@ -138,7 +140,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
 
-           launcher.setPower(gamepad1.right_trigger*1.5);
+           launcher.setPower(gamepad1.right_trigger*-1);
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
