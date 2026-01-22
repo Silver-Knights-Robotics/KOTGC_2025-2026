@@ -118,7 +118,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
 //            launchpower = Range.clip(drive + turn, -1.0, 1.0);
 //            launchpower2 = Range.clip(drive + turn, -1.0, 1.0);
-            launchpower2 = 1;
+            launchpower2 = (gamepad1.left_trigger);
 
             if (gamepad1.dpad_up) {
                 servo1.setPosition((servo1.getPosition() + 0.01));
@@ -132,14 +132,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             }
             if (gamepad1.dpad_right) {
                 servo2.setPosition((servo2.getPosition() - 0.01));
-
-                if (gamepad1.right_bumper) {
-                    servo2.setPosition((servo2.getPosition() - 0.01));
-                }
-                if (gamepad1.left_bumper) {
-                    servo2.setPosition((servo2.getPosition() + 0.01));
-
-                }
+            }
 
                 // Tank Mode uses one stick to control each wheel.
                 // - This requires no math, but it is hard to drive forward slowly and keep straight.
