@@ -97,6 +97,7 @@ public class AutoFront extends LinearOpMode {
         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
+            sleep(100);
         }
 
         // Step 2:  Spin left for 0.65 seconds
@@ -106,6 +107,7 @@ public class AutoFront extends LinearOpMode {
         while (opModeIsActive() && (runtime.seconds() < 0.65)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
+            sleep(100);
         }
 
         // Step 3:  Drive Forward for 1 Second
@@ -115,6 +117,7 @@ public class AutoFront extends LinearOpMode {
         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
+            sleep(100);
         }
 
         // Step 4:  Stop
