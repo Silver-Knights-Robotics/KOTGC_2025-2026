@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -78,8 +79,8 @@ public class AutoBackRed extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
@@ -97,6 +98,7 @@ public class AutoBackRed extends LinearOpMode {
         while (opModeIsActive() && (runtime.seconds() < .50)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
+            sleep(100);
         }
 
         // Step 2:  Spin right for 0.65 seconds
@@ -106,6 +108,7 @@ public class AutoBackRed extends LinearOpMode {
         while (opModeIsActive() && (runtime.seconds() < 0.65)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
+            sleep(100);
         }
 
         // Step 3:  Drive Forward for half Second
@@ -115,6 +118,7 @@ public class AutoBackRed extends LinearOpMode {
         while (opModeIsActive() && (runtime.seconds() < .50)) {
             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
+            sleep(100);
         }
 
         // Step 4:  Stop
