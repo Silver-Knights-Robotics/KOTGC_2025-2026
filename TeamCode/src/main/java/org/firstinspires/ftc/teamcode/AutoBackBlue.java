@@ -103,8 +103,8 @@ public class AutoBackBlue extends LinearOpMode {
 
 
         // Step 3:  Drive backwards for 1 Second
-        leftDrive.setPower(-FORWARD_SPEED);
-        rightDrive.setPower(-REVERSE_SPEED);
+        leftDrive.setPower(REVERSE_SPEED);
+        rightDrive.setPower(REVERSE_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
