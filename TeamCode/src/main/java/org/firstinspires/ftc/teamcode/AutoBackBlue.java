@@ -32,7 +32,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -101,8 +100,17 @@ public class AutoBackBlue extends LinearOpMode {
             sleep(100);
         }
 
+        // Step 2:  Spin left for 0.65 seconds
+        leftDrive.setPower(-TURN_SPEED);
+        rightDrive.setPower(TURN_SPEED);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.65)) {
+            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
+            telemetry.update();
+            sleep(100);
+        }
 
-        // Step 3:  Drive backwards for 1 Second
+        // Step 3:  Drive Forward for 1 Second
         leftDrive.setPower(REVERSE_SPEED);
         rightDrive.setPower(REVERSE_SPEED);
         runtime.reset();

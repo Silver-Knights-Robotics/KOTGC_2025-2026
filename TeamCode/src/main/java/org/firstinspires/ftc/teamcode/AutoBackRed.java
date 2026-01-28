@@ -93,7 +93,7 @@ public class AutoBackRed extends LinearOpMode {
 
         // Step 1:  Drive forward for half seconds
         leftDrive.setPower(FORWARD_SPEED);
-        rightDrive.setPower(REVERSE_SPEED);
+        rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < .50)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
@@ -112,7 +112,7 @@ public class AutoBackRed extends LinearOpMode {
         }
 
         // Step 3:  Drive Forward for half Second
-        leftDrive.setPower(FORWARD_SPEED);
+        leftDrive.setPower(REVERSE_SPEED);
         rightDrive.setPower(REVERSE_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < .50)) {
