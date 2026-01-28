@@ -93,7 +93,7 @@ public class AutoBackBlue extends LinearOpMode {
 
         // Step 1:  Drive forward for 1 seconds
         leftDrive.setPower(FORWARD_SPEED);
-        rightDrive.setPower(REVERSE_SPEED);
+        rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
